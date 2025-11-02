@@ -1,0 +1,288 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+.box {
+    background: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    margin-top: 30px;
+}
+
+.form h2 {
+    color: #45f3ff;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #45f3ff;
+    padding-bottom: 10px;
+}
+
+.inputBox {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.inputBox input {
+    width: 100%;
+    padding: 18px 10px 10px;
+    background: transparent;
+    border: 1px solid rgba(red, green, blue, alpha);
+    border-radius: 6px;
+    border-bottom: 2px solid #45f3ff;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+}
+
+.inputBox span {
+    position: absolute;
+    left: 10px;
+    padding: 10px 0;
+    pointer-events: none;
+    font-size: 16px;
+    color: #aaa;
+    transition: 0.3s;
+    top: 7px;
+}
+
+.inputBox input:focus ~ span,
+.inputBox input:valid ~ span {
+    transform: translateY(-37px);
+    font-size: 15px;
+    color: #45f3ff;
+    left: 10px;
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    background: #45f3ff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input[type="submit"]:hover {
+    background: #33c9d7;
+}
+
+.inputBox input[type="date"] ~ span {
+    transform: translateY(-37px);
+    font-size: 15px;
+    color: #45f3ff;
+    left: 10px;
+}
+
+.inputBox label {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.inputBox input[type="radio"] {
+    margin-right: 2px;
+}
+
+.userType {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #45f3ff;
+    font-size: 20px;
+}
+
+.radioButtons {
+    margin-top: 10px;
+}
+
+.radioButtons label {
+    display: inline-block;
+    margin: 0 10px;
+    color: #45f3ff;
+    font-size: 15px;
+}
+
+.radioButtons input[type="radio"] {
+    margin-right: 5px;
+    accent-color: #45f3ff;
+}
+
+.back-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: 2px solid #45f3ff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    z-index: 1000;
+}
+
+.back-arrow:hover {
+    background-color: #45f3ff;
+}
+
+.back-arrow::before {
+    content: "";
+    display: inline-block;
+    border: solid #45f3ff;
+    border-width: 0 3.5px 3.5px 0;
+    padding: 8px;
+    transform: rotate(135deg);
+    transition: border-color 0.3s;
+}
+
+.back-arrow:hover::before {
+    border-color: #0f2027;
+}
+
+.form-control {
+    background-color: transparent;
+    color: #f8f8f8;
+    border: 1px solid #45f3ff;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+
+}
+
+.form-control:focus {
+    border-color: #33c9d7;
+    box-shadow: none;
+    background-color: #0f2027;
+    color: #ffffff;
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+
+    .box {
+        max-width: 90%;
+        padding: 25px;
+        margin-top: 20px;
+    }
+
+    .form h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .inputBox input {
+        font-size: 15px;
+        padding: 16px 10px 10px;
+    }
+
+    .inputBox span {
+        font-size: 15px;
+        top: 8px;
+    }
+
+    input[type="submit"] {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .userType {
+        font-size: 18px;
+        margin-bottom: 25px;
+    }
+
+    .radioButtons label {
+        font-size: 14px;
+        margin: 0 8px;
+    }
+
+    .back-arrow {
+        width: 40px;
+        height: 40px;
+        top: 20px;
+        left: 20px;
+    }
+
+    .back-arrow::before {
+        padding: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .box {
+        max-width: 100%;
+        padding: 20px;
+        margin-top: 15px;
+    }
+
+    .form h2 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+
+    .inputBox input {
+        font-size: 14px;
+        padding: 14px 10px 10px;
+    }
+
+    .inputBox span {
+        font-size: 14px;
+        top: 8px;
+    }
+
+    input[type="submit"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .userType {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .radioButtons label {
+        font-size: 13px;
+        margin: 0 6px;
+    }
+
+    .back-arrow {
+        width: 36px;
+        height: 36px;
+        top: 15px;
+        left: 15px;
+    }
+
+    .back-arrow::before {
+        padding: 5px;
+    }
+}

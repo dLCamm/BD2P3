@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Paciente</title>
+    <link rel="stylesheet" href="/static/stylesadminitration.css">
+</head>
+<body>
+    <div class="box">
+        <form class="form" action="/actualizar_paciente" method="POST">
+            <h2>Editar Servicio</h2>
+
+
+            <input type="hidden" name="id" value="{{ usuario[0] }}">
+
+
+            <div class="inputBox">
+                <input type="text" id="Nombre" name="Nombre" value="{{ usuario[1] }}" required="required">
+                <label for="Nombre">Nombre del Servicio</label>
+            </div>
+
+
+            <div class="inputBox">
+                <input type="text" id="descripcion" name="descripcion" value="{{ usuario[2] }}" required="required">
+                <label for="descripcion">Descripción</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="costo" name="costo" value="{{ usuario[5] }}" required="required">
+                <label for="costo">Costo</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="duracion" name="duracion" value="{{ usuario[5] }}" required="required">
+                <label for="duracion">Duración</label>
+
+            </div>
+            <input type="submit" value="Actualizar">
+
+
+            {% if mensaje %}
+                <p style="color: green; text-align: center;">{{ mensaje }}</p>
+            {% elif error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
+

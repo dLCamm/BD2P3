@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if usuario %}Editar Cita{% else %}Nueva Cita{% endif %}</title>
+    <link rel="stylesheet" href="/static/stylesadminitration.css" />
+</head>
+<body>
+    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/lista_citas'"></button>
+    <div class="box">
+        <form class="form" action="/guardar_cita" method="POST">
+            <h2>{% if usuario %}Editar Cita{% else %}Nueva Cita{% endif %}</h2>
+
+            {% if usuario %}
+                <input type="hidden" name="id" value="{{ usuario[0] }}" />
+            {% endif %}
+
+            <div class="inputBox">
+                <input type="text" id="paciente" name="paciente" value="{{ usuario[1] if usuario else '' }}" required />
+                <span for="paciente">Paciente</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="date" id="fecha" name="fecha" value="{{ usuario[2] if usuario else '' }}" required />
+                <span for="fecha">Fecha</span>
+            </div>
+
+            <div class="inputBox">
+                <label for="servicio" style="color: #45f3ff; font-size: 15px;"> Servicio</label>
+                <select class="form-control" id="tipo_cama" required>
+                    <option value="" disabled selected></option>
+                    <option value="Matrimonial">Matrimonial</option>
+                    <option value="Individual">Individual</option>
+                    <option value="King Size">King Size</option>
+                    <option value="Queen Size">Queen Size</option>
+                </select>
+                
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="comentario" name="comentario" value="{{ usuario[5] if usuario else '' }}" required />
+                <span for="comentario">Comentario</span>
+            </div>
+
+            <input type="submit" value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" />
+
+            {% if mensaje %}
+                <p style="color: green; text-align: center;">{{ mensaje }}</p>
+            {% elif error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
+

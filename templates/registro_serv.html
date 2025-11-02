@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if usuario %}Nuevo Servicio{% else %}Nuevo Servicio{% endif %}</title>
+    <link rel="stylesheet" href="/static/stylesadminitration.css" />
+</head>
+<body>
+    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/servicios'"></button>
+    <div class="box">
+        <form class="form" action="/guardar_usuario" method="POST">
+            <h2>{% if usuario %}Nuevo Servicio{% else %}Nuevo Servicio{% endif %}</h2>
+
+            {% if usuario %}
+                <input type="hidden" name="id" value="{{ usuario[0] }}" />
+            {% endif %}
+
+            <div class="inputBox">
+                <input type="text" id="nombre" name="nombre" value="{{ usuario[1] if usuario else '' }}" required />
+                <span for="nombre">Nombre</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="descripcion" name="descripcion" value="{{ usuario[2] if usuario else '' }}" required />
+                <span for="descripcion">Descripción</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="costo" name="costo" value="{{ usuario[3] if usuario else '' }}" required />
+                <span for="costo">Costo</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="duracion" name="duracion" value="{{ usuario[4] if usuario else '' }}" required />
+                <span for="duracion">Duración</span>
+            </div>
+
+
+            <input type="submit" value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" />
+
+            {% if mensaje %}
+                <p style="color: green; text-align: center;">{{ mensaje }}</p>
+            {% elif error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
+

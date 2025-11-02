@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Pacientes</title>
+    <link rel="stylesheet" href="/static/styletablasadmin.css">
+
+</head>
+<body>
+    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/'"></button>
+    <div class="container">
+        <h2>Servicios Registrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Costo</th>
+                    <th>Duración</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario[0] }}</td>
+                    <td>{{ usuario[1] }}</td>
+                    <td>{{ usuario[2] }}</td>
+                    <td>{{ usuario[3] }}</td>
+                    <td>{{ usuario[4] }}</td>
+    
+                    <td>
+                        <a href="{{ url_for('editar_servicios', id=usuario[0]) }}">
+                            <button class="btn editar">Editar</button>
+                        </a>
+
+                        <form action="{{ url_for('eliminar_usuario') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="id" value="{{ usuario[0] }}">
+                            <button type="submit" class="btn eliminar" onclick="return confirm('¿Deseas eliminar este paciente?');">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/registro_serv">
+                <button class="btn agregar">Agregar Servicio</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
