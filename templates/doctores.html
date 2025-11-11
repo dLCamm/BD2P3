@@ -2,24 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Administración de Citas</title>
+    <title>Administración de Doctores</title>
     <link rel="stylesheet" href="/static/styletablasadmin.css">
 
 </head>
 <body>
     <button class="back-arrow" title="Retroceder" onclick="window.location.href='/'"></button>
     <div class="container">
-        <h2>Citas</h2>
+        <h2>Doctores</h2>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Fecha</th>
-                    <th>Servicio</th>
-                    <th>Comentario</th>
-                    <th>Costo</th>
                     <th>Doctor</th>
+                    <th>Especialidad</th>
+                    <th>Fecha_Ingreso</th>
+                    <th>Telefono</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,10 +28,8 @@
                     <td>{{ usuario[2] }}</td>
                     <td>{{ usuario[3] }}</td>
                     <td>{{ usuario[4] }}</td>
-                    <td>{{ usuario[5] }}</td>
-                    <td>{{ usuario[6] }}</td>
                     <td>
-                        <a href="{{ url_for('editar_cita', id=usuario[0]) }}">
+                        <a href="{{ url_for('editar_doctor', id=usuario[0]) }}">
                             <button class="btn editar">Editar</button>
                         </a>
 
@@ -47,8 +43,8 @@
             </tbody>
         </table>
         <div style="margin-top: 20px; text-align: center;">
-            <a href='/registrocita'>
-                <button class="btn agregar">Agregar cita</button>
+            <a href='/registro_doctor'>
+                <button class="btn agregar">Agregar Doctor</button>
             </a>
         </div>
     </div>

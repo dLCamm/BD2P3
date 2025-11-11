@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if usuario %}Editar Doctor{% else %}Nueva Doctor{% endif %}</title>
+    <link rel="stylesheet" href="/static/stylesadminitration.css" />
+</head>
+<body>
+    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/doctores'"></button>
+    <div class="box">
+        <form class="form" action="/guardar_doc" method="POST">
+            <h2>{% if usuario %}Editar Doctor{% else %}Nueva Doctor{% endif %}</h2>
+
+            {% if usuario %}
+                <input type="hidden" name="id" value="{{ usuario[0] }}" />
+            {% endif %}
+
+            <div class="inputBox">
+                <input type="text" id="doctor" name="doctor" value="{{ usuario[1] if usuario else '' }}" required />
+                <span for="doctor">Nombre</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="especialidad" name="especialidad" value="{{ usuario[2] if usuario else '' }}" required />
+                <span for="especialidad">Especialidad</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="date" id="fecha" name="fecha" value="{{ usuario[3] if usuario else '' }}" required />
+                <span for="fecha">Fecha de Ingreso</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="telefono" name="telefono" value="{{ usuario[4] if usuario else '' }}" required />
+                <span for="telefono">Teléfono</span>
+
+
+            <input type="submit" value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" />
+
+            {% if mensaje %}
+                <p style="color: green; text-align: center;">{{ mensaje }}</p>
+            {% elif error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
+

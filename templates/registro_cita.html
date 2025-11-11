@@ -27,20 +27,23 @@
             </div>
 
             <div class="inputBox">
-                <label for="servicio" style="color: #45f3ff; font-size: 15px;"> Servicio</label>
-                <select class="form-control" id="tipo_cama" required>
-                    <option value="" disabled selected></option>
-                    <option value="Matrimonial">Matrimonial</option>
-                    <option value="Individual">Individual</option>
-                    <option value="King Size">King Size</option>
-                    <option value="Queen Size">Queen Size</option>
-                </select>
-                
+                <input type="text" id="servicio" name="servicio" value="{{ usuario[3] if usuario else '' }}" required />
+                <span for="servicio">Servicio</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" id="comentario" name="comentario" value="{{ usuario[5] if usuario else '' }}" required />
+                <input type="text" id="comentario" name="comentario" value="{{ usuario[4] if usuario else '' }}" required />
                 <span for="comentario">Comentario</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="number" id="costo" name="costo" value="{{ usuario[5] if usuario else '' }}" required />
+                <span for="costo">Costo</span>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" id="doctor" name="doctor" value="{{ usuario[6] if usuario else '' }}" required />
+                <span for="doctor">Doctor</span>
             </div>
 
             <input type="submit" value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" />
