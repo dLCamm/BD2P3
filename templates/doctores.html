@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Administración de Doctores</title>
     <link rel="stylesheet" href="/static/styletablasadmin.css">
-
 </head>
 <body>
     <button class="back-arrow" title="Retroceder" onclick="window.location.href='/'"></button>
@@ -16,34 +15,37 @@
                     <th>ID</th>
                     <th>Doctor</th>
                     <th>Especialidad</th>
-                    <th>Fecha_Ingreso</th>
-                    <th>Telefono</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for usuario in usuarios %}
                 <tr>
-                    <td>{{ usuario[0] }}</td>
-                    <td>{{ usuario[1] }}</td>
-                    <td>{{ usuario[2] }}</td>
-                    <td>{{ usuario[3] }}</td>
-                    <td>{{ usuario[4] }}</td>
+                    <td>{{ usuario._id }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.especialidad }}</td>
+                    <td>{{ usuario.fecha_ingreso }}</td>
+                    <td>{{ usuario.telefono }}</td>
+
                     <td>
-                        <a href="{{ url_for('editar_doctor', id=usuario[0]) }}">
+                        <a href="{{ url_for('editar_doctor', id=usuario._id) }}">
                             <button class="btn editar">Editar</button>
                         </a>
 
-                        <form action="{{ url_for('eliminar_usuario') }}" method="POST" style="display:inline;">
-                            <input type="hidden" name="id" value="{{ usuario[0] }}">
-                            <button type="submit" class="btn eliminar" onclick="return confirm('¿Deseas eliminar este paciente?');">Eliminar</button>
-                        </form>
+                        <a href="{{ url_for('eliminar_doctor', id=usuario._id) }}"
+                           onclick="return confirm('¿Deseas eliminar este doctor?');">
+                            <button class="btn eliminar">Eliminar</button>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
         <div style="margin-top: 20px; text-align: center;">
-            <a href='/registro_doctor'>
+            <a href="/registro_doctor">
                 <button class="btn agregar">Agregar Doctor</button>
             </a>
         </div>

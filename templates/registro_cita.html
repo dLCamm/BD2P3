@@ -13,40 +13,79 @@
             <h2>{% if usuario %}Editar Cita{% else %}Nueva Cita{% endif %}</h2>
 
             {% if usuario %}
-                <input type="hidden" name="id" value="{{ usuario[0] }}" />
+                <input type="hidden" name="id" value="{{ usuario['_id'] }}" />
             {% endif %}
 
             <div class="inputBox">
-                <input type="text" id="paciente" name="paciente" value="{{ usuario[1] if usuario else '' }}" required />
+                <input 
+                    type="text" 
+                    id="paciente" 
+                    name="paciente" 
+                    value="{{ usuario['paciente'] if usuario else '' }}" 
+                    required 
+                />
                 <span for="paciente">Paciente</span>
             </div>
 
             <div class="inputBox">
-                <input type="date" id="fecha" name="fecha" value="{{ usuario[2] if usuario else '' }}" required />
+                <input 
+                    type="date" 
+                    id="fecha" 
+                    name="fecha" 
+                    value="{{ usuario['fecha'] if usuario else '' }}" 
+                    required 
+                />
                 <span for="fecha">Fecha</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" id="servicio" name="servicio" value="{{ usuario[3] if usuario else '' }}" required />
+                <input 
+                    type="text" 
+                    id="servicio" 
+                    name="servicio" 
+                    value="{{ usuario['servicio'] if usuario else '' }}" 
+                    required 
+                />
                 <span for="servicio">Servicio</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" id="comentario" name="comentario" value="{{ usuario[4] if usuario else '' }}" required />
+                <input 
+                    type="text" 
+                    id="comentario" 
+                    name="comentario" 
+                    value="{{ usuario['comentario'] if usuario else '' }}" 
+                    required 
+                />
                 <span for="comentario">Comentario</span>
             </div>
 
             <div class="inputBox">
-                <input type="number" id="costo" name="costo" value="{{ usuario[5] if usuario else '' }}" required />
+                <input 
+                    type="number" 
+                    id="costo" 
+                    name="costo" 
+                    value="{{ usuario['costo'] if usuario else '' }}" 
+                    required 
+                />
                 <span for="costo">Costo</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" id="doctor" name="doctor" value="{{ usuario[6] if usuario else '' }}" required />
+                <input 
+                    type="text" 
+                    id="doctor" 
+                    name="doctor" 
+                    value="{{ usuario['doctor'] if usuario else '' }}" 
+                    required 
+                />
                 <span for="doctor">Doctor</span>
             </div>
 
-            <input type="submit" value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" />
+            <input 
+                type="submit" 
+                value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" 
+            />
 
             {% if mensaje %}
                 <p style="color: green; text-align: center;">{{ mensaje }}</p>
@@ -57,4 +96,3 @@
     </div>
 </body>
 </html>
-

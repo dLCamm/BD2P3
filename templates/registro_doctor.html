@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% if usuario %}Nuevo Servicio{% else %}Nuevo Servicio{% endif %}</title>
+    <title>{% if usuario %}Editar Doctor{% else %}Nuevo Doctor{% endif %}</title>
     <link rel="stylesheet" href="/static/stylesadminitration.css" />
 </head>
 <body>
-    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/servicios'"></button>
+    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/doctores'"></button>
+
     <div class="box">
-        <form class="form" action="/guardar_servicio" method="POST">
-            <h2>{% if usuario %}Nuevo Servicio{% else %}Nuevo Servicio{% endif %}</h2>
+        <form class="form" action="/guardar_doctor" method="POST">
+            <h2>{% if usuario %}Editar Doctor{% else %}Nuevo Doctor{% endif %}</h2>
 
             {% if usuario %}
                 <input type="hidden" name="id" value="{{ usuario['_id'] }}" />
@@ -30,34 +31,34 @@
             <div class="inputBox">
                 <input 
                     type="text" 
-                    id="descripcion" 
-                    name="descripcion" 
-                    value="{{ usuario['descripcion'] if usuario else '' }}" 
+                    id="especialidad" 
+                    name="especialidad" 
+                    value="{{ usuario['especialidad'] if usuario else '' }}" 
                     required 
                 />
-                <span for="descripcion">Descripción</span>
+                <span for="especialidad">Especialidad</span>
+            </div>
+
+            <div class="inputBox">
+                <input 
+                    type="date" 
+                    id="fecha_ingreso   " 
+                    name="fecha_ingreso" 
+                    value="{{ usuario['fecha_ingreso'] if usuario else '' }}" 
+                    required 
+                />
+                <span for="fecha_ingreso">Fecha de Ingreso</span>
             </div>
 
             <div class="inputBox">
                 <input 
                     type="text" 
-                    id="costo" 
-                    name="costo" 
-                    value="{{ usuario['costo'] if usuario else '' }}" 
+                    id="telefono" 
+                    name="telefono" 
+                    value="{{ usuario['telefono'] if usuario else '' }}" 
                     required 
                 />
-                <span for="costo">Costo</span>
-            </div>
-
-            <div class="inputBox">
-                <input 
-                    type="text" 
-                    id="duracion" 
-                    name="duracion" 
-                    value="{{ usuario['duracion'] if usuario else '' }}" 
-                    required 
-                />
-                <span for="duracion">Duración</span>
+                <span for="telefono">Teléfono</span>
             </div>
 
             <input 

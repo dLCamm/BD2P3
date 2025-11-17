@@ -1,4 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+
+
+client = MongoClient("mongodb://localhost:27017/")  
+db = client["mi_clinica"] 
+servicios_col = db["servicios"]
+citas_col = db["citas"]
+doctores_col = db["doctores"]
+
+
 
 app = Flask(__name__)
 
@@ -8,59 +20,191 @@ def inicio():
 
 @app.route("/servicios")
 def servicios():
-    usuarios = [
-        [1, "Revisión General", "Evaluación de dolores musculares", 100, 80],
-        [2, "Maria Gomez", "Gomez", 2001, 2002],
-        [3, "Carlos Ruiz", "Ruiz", 1998, 1999]]
+    usuarios = list(servicios_col.find())
     return render_template("servicios.html", usuarios=usuarios)
+
+
 
 @app.route("/lista_citas")
 def lista_citas():
-    usuarios = [
-        [1, "Brandom", "2025-11-02", "Revision General", "Alergico a la penicilina", 50, "Juan Perez"],
-        [2, "Maria Gomez", 2001, "Samuel", "pan",  60, "Maria Gomez"],
-        [3, "Carlos Ruiz", 1998, "Samuel", "lingo", 40, "Carlos Ruiz"]]
+    usuarios = list(citas_col.find())
     return render_template("lista_citas.html", usuarios=usuarios)
 
 
-@app.route("/editar_servicios/<int:id>")
+
+
+
+@app.route("/editar_servicios/<id>")
 def editar_servicios(id):
-    usuario = [1, "Revisión General", "Evaluación de dolores dentales", 100, 80]
+    usuario = servicios_col.find_one({"_id": ObjectId(id)})
     return render_template("editar_servicios.html", usuario=usuario)
 
-@app.route("/editar_citas/<int:id>")
+@app.route("/actualizar_servicio", methods=["POST"])
+def actualizar_servicio():
+    try:
+        id = request.form["id"]
+        nombre = request.form["nombre"]
+        descripcion = request.form["descripcion"]
+        costo = request.form["costo"]
+        duracion = request.form["duracion"]
+
+        servicios_col.update_one(
+            {"_id": ObjectId(id)},
+            {
+                "$set": {
+                    "nombre": nombre,
+                    "descripcion": descripcion,
+                    "costo": int(costo),
+                    "duracion": int(duracion)
+                }
+            }
+        )
+
+        return redirect(url_for("servicios"))
+
+    except Exception as e:
+        return f"Error al actualizar: {e}"
+
+
+@app.route("/editar_cita/<id>")
 def editar_cita(id):
-    usuario = [1, "Juan Perez", "Evaluación de dolores dentales", 1999, 2000, "12894248", "Dr. Carlos Ruiz"]
+    usuario = citas_col.find_one({"_id": ObjectId(id)})
     return render_template("editar_citas.html", usuario=usuario)
+
+
+@app.route("/actualizar_cita", methods=["POST"])
+def actualizar_cita():
+    try:
+        id = request.form["id"]
+
+        citas_col.update_one(
+            {"_id": ObjectId(id)},
+            {
+                "$set": {
+                    "paciente": request.form["paciente"],
+                    "fecha": request.form["fecha"],
+                    "servicio": request.form["servicio"],
+                    "comentario": request.form["comentario"],
+                    "costo": request.form["costo"],
+                    "doctor": request.form["doctor"],
+                }
+            }
+        )
+        return redirect("/lista_citas")
+
+    except Exception as e:
+        return f"Error al actualizar cita: {e}"
+
+
 
 @app.route("/registro_serv")
 def registro_serv():
     return render_template("registro_serv.html")
 
+@app.route("/guardar_servicio", methods=["POST"])
+def guardar_servicio():
+    try:
+        servicios_col.insert_one({
+            "nombre": request.form["nombre"],
+            "descripcion": request.form["descripcion"],
+            "costo": request.form["costo"],
+            "duracion": request.form["duracion"]
+        })
+        return redirect("/servicios")
+
+    except Exception as e:
+        return f"Error al guardar servicio: {e}"
+
 @app.route('/registrocita')
 def registrocita():
     return render_template("registro_cita.html")
 
-@app.route("/eliminar_usuario")
-def eliminar_usuario():
-    return "Usuario eliminado"
+@app.route("/guardar_cita", methods=["POST"])
+def guardar_cita():
+    try:
+        citas_col.insert_one({
+            "paciente": request.form["paciente"],
+            "fecha": request.form["fecha"],
+            "servicio": request.form["servicio"],
+            "comentario": request.form["comentario"],
+            "costo": request.form["costo"],
+            "doctor": request.form["doctor"]
+        })
+        return redirect("/lista_citas")
+
+    except Exception as e:
+        return f"Error al guardar cita: {e}"
+
+
 
 @app.route("/doctores")
 def doctores():
-    return render_template("doctores.html", usuarios=[
-        [1, "Dr. Juan Perez", "Cardiologia", "05/10/2020", "555-1234"],
-        [2, "Dra. Maria Gomez", "Neurologia", "2018-03-22", "555-5678"],
-        [3, "Dr. Carlos Ruiz", "Pediatria", "2019-11-15", "555-8765"]
-    ])
+    usuarios = list(doctores_col.find())
+    return render_template("doctores.html", usuarios=usuarios)
 
 @app.route("/registro_doctor")
 def registro_doctor():
-    return render_template("registor_doctor.html")
+    return render_template("registro_doctor.html")
 
-@app.route("/editar_doctor/<int:id>")
+@app.route("/guardar_doctor", methods=["POST"])
+def guardar_doctor():
+    try:
+        doctores_col.insert_one({
+            "nombre": request.form["nombre"],
+            "especialidad": request.form["especialidad"],
+            "fecha_ingreso": request.form["fecha_ingreso"],
+            "telefono": request.form["telefono"]
+        })
+        return redirect("/doctores")
+
+    except Exception as e:
+        return f"Error al guardar doctor: {e}"
+
+
+@app.route("/editar_doctor/<id>")
 def editar_doctor(id):
-    usuario = [1, "Dr. Juan Perez", "Cardiologia", "2020-05-10", "555-1234"]
+    usuario = doctores_col.find_one({"_id": ObjectId(id)})
     return render_template("editar_doctor.html", usuario=usuario)
+
+@app.route("/actualizar_doctor", methods=["POST"])
+def actualizar_doctor():
+    try:
+        id = request.form["id"]
+
+        doctores_col.update_one(
+            {"_id": ObjectId(id)},
+            {
+                "$set": {
+                    "nombre": request.form["nombre"],
+                    "especialidad": request.form["especialidad"],
+                    "fecha_ingreso": request.form["fecha_ingreso"],
+                    "telefono": request.form["telefono"],
+                }
+            }
+        )
+        return redirect("/doctores")
+
+    except Exception as e:
+        return f"Error al actualizar doctor: {e}"
+
+
+
+@app.route("/eliminar_servicio/<id>")
+def eliminar_servicio(id):
+    servicios_col.delete_one({"_id": ObjectId(id)})
+    return redirect("/servicios")
+
+@app.route("/eliminar_cita/<id>")
+def eliminar_cita(id):
+    citas_col.delete_one({"_id": ObjectId(id)})
+    return redirect("/lista_citas")
+
+@app.route("/eliminar_doctor/<id>")
+def eliminar_doctor(id):
+    doctores_col.delete_one({"_id": ObjectId(id)})
+    return redirect("/doctores")
+
+
 
 
 

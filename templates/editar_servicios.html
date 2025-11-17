@@ -3,41 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Paciente</title>
+    <title>Editar Servicio</title>
     <link rel="stylesheet" href="/static/stylesadminitration.css">
 </head>
 <body>
     <div class="box">
-        <form class="form" action="/actualizar_paciente" method="POST">
+        <form class="form" action="/actualizar_servicio" method="POST">
             <h2>Editar Servicio</h2>
 
-
-            <input type="hidden" name="id" value="{{ usuario[0] }}">
-
+            <!-- ID oculto -->
+            <input type="hidden" name="id" value="{{ usuario['_id'] }}">
 
             <div class="inputBox">
-                <input type="text" id="Nombre" name="Nombre" value="{{ usuario[1] }}" required="required">
-                <label for="Nombre">Nombre del Servicio</label>
+                <input type="text" id="nombre" name="nombre" value="{{ usuario['nombre'] }}" required="required">
+                <label for="nombre">Nombre del Servicio</label>
             </div>
 
-
             <div class="inputBox">
-                <input type="text" id="descripcion" name="descripcion" value="{{ usuario[2] }}" required="required">
+                <input type="text" id="descripcion" name="descripcion" value="{{ usuario['descripcion'] }}" required="required">
                 <label for="descripcion">Descripción</label>
             </div>
 
             <div class="inputBox">
-                <input type="text" id="costo" name="costo" value="{{ usuario[3] }}" required="required">
+                <input type="number" id="costo" name="costo" value="{{ usuario['costo'] }}" required="required">
                 <label for="costo">Costo</label>
             </div>
 
             <div class="inputBox">
-                <input type="text" id="duracion" name="duracion" value="{{ usuario[4] }}" required="required">
+                <input type="number" id="duracion" name="duracion" value="{{ usuario['duracion'] }}" required="required">
                 <label for="duracion">Duración</label>
-
             </div>
-            <input type="submit" value="Actualizar">
 
+            <input type="submit" value="Actualizar">
 
             {% if mensaje %}
                 <p style="color: green; text-align: center;">{{ mensaje }}</p>
@@ -48,4 +45,3 @@
     </div>
 </body>
 </html>
-

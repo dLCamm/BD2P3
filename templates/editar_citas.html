@@ -1,64 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario</title>
-    <link rel="stylesheet" href="/static/stylesadminitration.css">
-</head>
-<body>
-    <div class="box">
-        <button class="back-arrow" title="Retroceder" onclick="window.location.href='/lista_citas'"></button>
-        <form class="form" action="/actualizar_cita" method="POST">
-            <h2>Editar Citas</h2>
+<form class="form" action="/actualizar_cita" method="POST">
+    <input type="hidden" name="id" value="{{ usuario['_id'] | string }}">
 
-
-            <input type="hidden" name="id" value="{{ usuario[0] }}">
-
-
-            <div class="inputBox">
-                <input type="text" id="cliente" name="cliente" value="{{ usuario[1] }}" required="required">
-                <label for="cliente">Cliente</label>
-            </div>            
-
-
-            <div class="inputBox">
-                <input type="date" id="fecha" name="fecha" value="{{ usuario[2] }}" required="required">
-                <label for="fecha">Fecha</label>
-            </div>
-
-            <div class="inputBox">
-                <input type="text" id="servicio" name="servicio" value="{{ usuario[3] }}" required="required">
-                <label for="servicio">Servicio</label>
-            </div>
-
-
-            <div class="inputBox">
-                <input type="text" id="comentario" name="comentario" value="{{ usuario[4] }}" required="required">
-                <label for="comentario">Comentario</label>
-            </div>
-
-            <div class="inputBox">
-                <input type="number" id="costo" name="costo" value="{{ usuario[5] }}" required="required">
-                <label for="costo">Costo</label>
-            </div>
-
-            <div class="inputBox">
-                <input type="text" id="doctor" name="doctor" value="{{ usuario[6] }}" required="required">
-                <label for="doctor">Doctor</label>
-            </div>
-
-            <input type="submit" value="Actualizar">
-
-
-
-            {% if mensaje %}
-                <p style="color: green; text-align: center;">{{ mensaje }}</p>
-            {% elif error %}
-                <p style="color: red; text-align: center;">{{ error }}</p>
-            {% endif %}
-        </form>
+    <div class="inputBox">
+        <input type="text" id="paciente" name="paciente" value="{{ usuario['paciente'] }}" required>
+        <label for="paciente">Paciente</label>
     </div>
-</body>
-</html>
 
+    <div class="inputBox">
+        <input type="date" id="fecha" name="fecha" value="{{ usuario['fecha'] }}" required>
+        <label for="fecha">Fecha</label>
+    </div>
+
+    <div class="inputBox">
+        <input type="text" id="servicio" name="servicio" value="{{ usuario['servicio'] }}" required>
+        <label for="servicio">Servicio</label>
+    </div>
+
+    <div class="inputBox">
+        <input type="text" id="comentario" name="comentario" value="{{ usuario['comentario'] }}" required>
+        <label for="comentario">Comentario</label>
+    </div>
+
+    <div class="inputBox">
+        <input type="number" id="costo" name="costo" value="{{ usuario['costo'] }}" required>
+        <label for="costo">Costo</label>
+    </div>
+
+    <div class="inputBox">
+        <input type="text" id="doctor" name="doctor" value="{{ usuario['doctor'] }}" required>
+        <label for="doctor">Doctor</label>
+    </div>
+
+    <input type="submit" value="Actualizar">
+</form>

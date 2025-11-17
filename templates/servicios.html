@@ -2,52 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Administración de Pacientes</title>
-    <link rel="stylesheet" href="/static/styletablasadmin.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios</title>
+    <link rel="stylesheet" href="/static/stylesadminitration.css">
 </head>
 <body>
-    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/'"></button>
-    <div class="container">
-        <h2>Servicios Registrados</h2>
-        <table>
+
+    <div class="box">
+        <h2>Servicios</h2>
+
+        <button onclick="window.location.href='/registro_serv'">Nuevo Servicio</button>
+
+        <table border="1" style="width:100%; margin-top:20px;">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Costo</th>
                     <th>Duración</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for usuario in usuarios %}
+                {% for u in usuarios %}
                 <tr>
-                    <td>{{ usuario[0] }}</td>
-                    <td>{{ usuario[1] }}</td>
-                    <td>{{ usuario[2] }}</td>
-                    <td>{{ usuario[3] }}</td>
-                    <td>{{ usuario[4] }}</td>
-    
+                    <td>{{ u.nombre }}</td>
+                    <td>{{ u.descripcion }}</td>
+                    <td>{{ u.costo }}</td>
+                    <td>{{ u.duracion }}</td>
                     <td>
-                        <a href="{{ url_for('editar_servicios', id=usuario[0]) }}">
-                            <button class="btn editar">Editar</button>
-                        </a>
-
-                        <form action="{{ url_for('eliminar_usuario') }}" method="POST" style="display:inline;">
-                            <input type="hidden" name="id" value="{{ usuario[0] }}">
-                            <button type="submit" class="btn eliminar" onclick="return confirm('¿Deseas eliminar este paciente?');">Eliminar</button>
-                        </form>
+                        <a href="/editar_servicios/{{ u._id }}">Editar</a> |
+                        <a href="/eliminar_servicio/{{ u._id }}" onclick="return confirm('¿Eliminar servicio?')">Eliminar</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <div style="margin-top: 20px; text-align: center;">
-            <a href="/registro_serv">
-                <button class="btn agregar">Agregar Servicio</button>
-            </a>
-        </div>
+
     </div>
+
 </body>
 </html>
