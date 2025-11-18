@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicios</title>
-    <link rel="stylesheet" href="/static/stylesadminitration.css">
+    <link rel="stylesheet" href="/static/styletablasadmin.css">
 </head>
 <body>
+    <button class="back-arrow" title="Retroceder" onclick="window.location.href='/'"></button>
 
-    <div class="box">
+    <div class="container">
         <h2>Servicios</h2>
-
-        <button onclick="window.location.href='/registro_serv'">Nuevo Servicio</button>
-
-        <table border="1" style="width:100%; margin-top:20px;">
+        <table >
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -31,13 +29,20 @@
                     <td>{{ u.costo }}</td>
                     <td>{{ u.duracion }}</td>
                     <td>
-                        <a href="/editar_servicios/{{ u._id }}">Editar</a> |
-                        <a href="/eliminar_servicio/{{ u._id }}" onclick="return confirm('¿Eliminar servicio?')">Eliminar</a>
+                        <a href="/editar_servicios/{{ u._id }}"><button class="btn editar">Editar</button></a>
+                        <a href="/eliminar_servicio/{{ u._id }}"onclick="return confirm('¿Deseas eliminar esta cita?');">
+                            <button class="btn eliminar">Eliminar</button></a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/registro_serv">
+                <button class="btn agregar">Agregar Cita</button>
+            </a>
+        </div>
 
     </div>
 

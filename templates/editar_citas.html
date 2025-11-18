@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Citas</title>
+    <link rel="stylesheet" href="/static/stylesadminitration.css">
+</head>
+<body>
+    <div class="box">
+        <button class="back-arrow" title="Retroceder" onclick="window.location.href='/lista_citas'"></button>
+        <form class="form" action="/actualizar_cita" method="POST">
+            <h2>Editar Citas</h2>
+
 <form class="form" action="/actualizar_cita" method="POST">
     <input type="hidden" name="id" value="{{ usuario['_id'] | string }}">
 
@@ -12,7 +26,13 @@
     </div>
 
     <div class="inputBox">
-        <input type="text" id="servicio" name="servicio" value="{{ usuario['servicio'] }}" required>
+        <select class="form-control" id="servicio" name="servicio" required>
+            <option value="" disabled selected>{{usuario.servicio.nombre}}</option>
+            {% for valores in ls %}
+            <option value="{{valores}}">{{valores}}</option>
+            {% endfor %}
+        </select>
+                
         <label for="servicio">Servicio</label>
     </div>
 
@@ -27,7 +47,12 @@
     </div>
 
     <div class="inputBox">
-        <input type="text" id="doctor" name="doctor" value="{{ usuario['doctor'] }}" required>
+        <select class="form-control" id="doctor" name="doctor"  required>
+            <option value="" disabled selected>{{usuario.doctor.nombre}}</option>
+            {% for valores in ld %}
+            <option value="{{valores}}">{{valores}}</option>
+            {% endfor %}
+        </select>
         <label for="doctor">Doctor</label>
     </div>
 

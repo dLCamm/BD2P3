@@ -29,10 +29,10 @@
                     <td>{{ c._id }}</td>
                     <td>{{ c.paciente }}</td>
                     <td>{{ c.fecha }}</td>
-                    <td>{{ c.servicio }}</td>
+                    <td>{{ c.servicio.nombre }}</td>
                     <td>{{ c.comentario }}</td>
                     <td>{{ c.costo }}</td>
-                    <td>{{ c.doctor }}</td>
+                    <td>{{ c.doctor.nombre }}</td>
 
                     <td>
                         <a href="{{ url_for('editar_cita', id=c._id) }}">

@@ -96,7 +96,9 @@ input[type="submit"]:hover {
 
 .inputBox label {
     margin-right: 10px;
-    display: inline-block;
+    font-size: 15px;
+    left: 10px;
+    color: #45f3ff;
 }
 
 .inputBox input[type="radio"] {

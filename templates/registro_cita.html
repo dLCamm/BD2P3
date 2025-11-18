@@ -39,14 +39,13 @@
             </div>
 
             <div class="inputBox">
-                <input 
-                    type="text" 
-                    id="servicio" 
-                    name="servicio" 
-                    value="{{ usuario['servicio'] if usuario else '' }}" 
-                    required 
-                />
-                <span for="servicio">Servicio</span>
+                <label for="servicio">Servicio</label>
+                <select class="form-control" id="servicio" name="servicio" required>
+                    <option value="" disabled selected>Servicio</option>
+                    {% for valores in ls %}
+                    <option value="{{ valores }}">{{ valores }}</option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="inputBox">
@@ -72,16 +71,16 @@
             </div>
 
             <div class="inputBox">
-                <input 
-                    type="text" 
-                    id="doctor" 
-                    name="doctor" 
-                    value="{{ usuario['doctor'] if usuario else '' }}" 
-                    required 
-                />
-                <span for="doctor">Doctor</span>
+                <label for="doctor">Doctor</label>
+                <select class="form-control" id="doctor" name="doctor" required >
+                    <option value="" disabled selected>Doctor</option>
+                    {% for valores in ld %}
+                    <option value="{{valores}}" >{{valores}}</option>
+                    {% endfor %}
+                </select>
+                
+                
             </div>
-
             <input 
                 type="submit" 
                 value="{% if usuario %}Actualizar{% else %}Crear{% endif %}" 

@@ -69,27 +69,44 @@ def actualizar_servicio():
 @app.route("/editar_cita/<id>")
 def editar_cita(id):
     usuario = citas_col.find_one({"_id": ObjectId(id)})
-    return render_template("editar_citas.html", usuario=usuario)
+    lista_doctores = doctores_col.distinct("nombre")
+    lista_servicios = servicios_col.distinct("nombre")
+    return render_template("editar_citas.html", usuario=usuario, ld = lista_doctores , ls =lista_servicios )
+
 
 
 @app.route("/actualizar_cita", methods=["POST"])
 def actualizar_cita():
     try:
         id = request.form["id"]
-
+        nombre_servicio = request.form["servicio"]
+        nombre_doctor = request.form["doctor"]
+        servicio_doc = servicios_col.find_one({"nombre": nombre_servicio})
+        doctor_doc = doctores_col.find_one({"nombre": nombre_doctor})
         citas_col.update_one(
             {"_id": ObjectId(id)},
             {
                 "$set": {
                     "paciente": request.form["paciente"],
                     "fecha": request.form["fecha"],
-                    "servicio": request.form["servicio"],
+                    "servicio_id": servicio_doc["_id"],
+                    "servicio": {
+                        "nombre": servicio_doc["nombre"],
+                        "descripcion": servicio_doc.get("descripcion", ""),
+                        "costo": servicio_doc.get("costo", 0),
+                        "duracion": servicio_doc.get("duracion", "")
+                    },
                     "comentario": request.form["comentario"],
                     "costo": request.form["costo"],
-                    "doctor": request.form["doctor"],
-                }
-            }
-        )
+                    "doctor_id": doctor_doc["_id"],
+                    "doctor": {
+                        "_id": doctor_doc["_id"],
+                        "nombre": doctor_doc["nombre"],
+                        "especialidad": doctor_doc.get("especialidad", ""),
+                        "fecha_ingreso": doctor_doc.get("fecha_ingreso", ""),
+                        "telefono": doctor_doc.get("telefono", "")
+                        }
+                    }})
         return redirect("/lista_citas")
 
     except Exception as e:
@@ -117,18 +134,38 @@ def guardar_servicio():
 
 @app.route('/registrocita')
 def registrocita():
-    return render_template("registro_cita.html")
+    lista_doctores = doctores_col.distinct("nombre")
+    lista_servicios = servicios_col.distinct("nombre")
+    return render_template("registro_cita.html", ld = lista_doctores , ls =lista_servicios )
 
 @app.route("/guardar_cita", methods=["POST"])
 def guardar_cita():
     try:
+        
+        nombre_servicio = request.form["servicio"]
+        nombre_doctor = request.form["doctor"]
+        servicio_doc = servicios_col.find_one({"nombre": nombre_servicio})
+        doctor_doc = doctores_col.find_one({"nombre": nombre_doctor})
+
         citas_col.insert_one({
             "paciente": request.form["paciente"],
             "fecha": request.form["fecha"],
-            "servicio": request.form["servicio"],
+            "servicio_id": servicio_doc["_id"],
+            "servicio": {
+                "nombre": servicio_doc["nombre"],
+                "descripcion": servicio_doc.get("descripcion", ""),
+                "costo": servicio_doc.get("costo", 0),
+                "duracion": servicio_doc.get("duracion", "")
+            },
             "comentario": request.form["comentario"],
             "costo": request.form["costo"],
-            "doctor": request.form["doctor"]
+            "doctor_id": doctor_doc["_id"],
+            "doctor": {
+                "nombre": doctor_doc["nombre"],
+                "especialidad": doctor_doc.get("especialidad", ""),
+                "fecha_ingreso": doctor_doc.get("fecha_ingreso", ""),
+                "telefono": doctor_doc.get("telefono", "")
+            }
         })
         return redirect("/lista_citas")
 
